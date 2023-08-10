@@ -1,0 +1,61 @@
+openapi: "3.0.0"
+paths:
+  /hpcs:
+    get:
+      summary: List all HPCs
+      operationId: listHPCs
+      tags:
+        - hpcs
+      responses:
+        '200':
+          description: A list of HPCs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HPC'
+  /hpcs/{id}:
+    get:
+      summary: Get information of a specific HPC
+      operationId: getHPCById
+      tags:
+        - hpcs
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: An HPC object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HPC'
+        '404':
+          description: HPC not found
+components:
+  schemas:
+    HPC:
+      type: object
+      required:
+        - id
+        - name
+        - os
+        - applications
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        os:
+          type: string
+        applications:
+          type: array
+          items:
+            type: string
+
